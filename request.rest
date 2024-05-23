@@ -1,0 +1,31 @@
+GET http://localhost:3000/products 
+
+###
+POST http://localhost:3000/products
+Content-Type: application/json
+
+{
+    "name": "Semen",
+    "image": "img/semen.jpg",
+    "category": "Material",
+    "stock": 10,
+    "unit_price": 50000
+}
+
+###
+GET http://localhost:3000/products/664ea3de33e78e730ca3bfb5
+
+###
+PATCH http://localhost:3000/products/664ea3de33e78e730ca3bfb5
+Content-Type: application/json
+
+{
+    "name": "Kursi Empat Roda",
+    "image": "img/kursi.jpg",
+    "category": "Furniture",
+    "stock": 5,
+    "unit_price": 20000
+}
+
+###
+DELETE  http://localhost:3000/products/664ea3de33e78e730ca3bfb5
