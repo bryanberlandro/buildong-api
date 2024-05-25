@@ -1,4 +1,4 @@
-import mongoose from "../utils/db";
+import mongoose from "../utils/db.js";
 import bcrypt from 'bcrypt';
 
 const AdminSchema = mongoose.Schema({
@@ -13,7 +13,7 @@ const AdminSchema = mongoose.Schema({
     }
 })
 
-AdminSchema.pre('save', async (next) => {
+AdminSchema.pre('save', async function (next){
     if(!this.isModified('password')){
         return next();
     }

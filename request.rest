@@ -48,3 +48,30 @@ Content-Type: application/json
 
 ###
 DELETE  http://localhost:3000/reviews/664efb281455764c8fa644b1
+
+###
+POST http://localhost:3000/register
+Content-Type: application/json
+
+{
+    "email": "bryanberlandro@example.com",
+    "password": "rbyan123"
+}
+
+###
+POST http://localhost:3000/add-admin
+Content-Type: application/json
+
+{
+    "email": "admin@gmail.com",
+    "password": "admbuildong"
+}
+
+###
+POST http://localhost:3000/login
+Content-Type: application/json
+
+{
+    "email": "admin@gmail.com",
+    "password": "admbuildong"
+}

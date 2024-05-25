@@ -1,4 +1,4 @@
-import mongoose from "../utils/db";
+import mongoose from "../utils/db.js";
 import bcrypt from 'bcrypt';
 
 const UserSchema = mongoose.Schema({
@@ -16,7 +16,7 @@ const UserSchema = mongoose.Schema({
         default: Date.now()
     }
 })
-UserSchema.pre('save', async (next) => {
+UserSchema.pre('save', async function(next){
     if(!this.isModified('password')){
         return next();
     }
