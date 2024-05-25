@@ -9,6 +9,15 @@ const Product = mongoose.Schema({
         type: String,
         required: true
     },
+    desc: {
+        type: String,
+        required: true
+    },
+    item_sold: {
+        type: Number,
+        required: true,
+        default: 0
+    },
     category: {
         type: String,
         required: true
@@ -20,7 +29,11 @@ const Product = mongoose.Schema({
     unit_price: {
         type: Number,
         required: true
+    },
+    published_at: {
+        type: Date,
+        default: Date.now()
     }
 })
 
-export default mongoose.model('Products',Product);
+export default mongoose.model('Product',Product);

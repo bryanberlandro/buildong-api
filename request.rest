@@ -5,15 +5,17 @@ POST http://localhost:3000/products
 Content-Type: application/json
 
 {
-    "name": "Semen",
-    "image": "img/semen.jpg",
-    "category": "Material",
+    "name": "Semen uhuy",
+    "image": "img/Semen.jpg",
+    "desc": "Semen ini sangat bagus",
+    "category": "Furniture",
     "stock": 10,
-    "unit_price": 50000
+    "unit_price": 50000,
+    "published_at": ""
 }
 
 ###
-GET http://localhost:3000/products/664ea3de33e78e730ca3bfb5
+GET http://localhost:3000/products/664eb7028c0392eaf87a05e4
 
 ###
 PATCH http://localhost:3000/products/664ea3de33e78e730ca3bfb5
@@ -28,4 +30,21 @@ Content-Type: application/json
 }
 
 ###
-DELETE  http://localhost:3000/products/664ea3de33e78e730ca3bfb5
+DELETE  http://localhost:3000/products/664ef362ad68ccc49738c06a
+
+###
+POST http://localhost:3000/products/664ee7b7cbf66463111828ee/reviews
+Content-Type: application/json
+
+{
+    "name": "Pecinta Kursieee",
+    "user_image": "http://example.com/user.jpg",
+    "product_image": "http://example.com/product.jpg",
+    "rating": 5,
+    "desc": "Kursinya Nyaman Banget",
+    "like": 2,
+    "published_at": ""
+}
+
+###
+DELETE  http://localhost:3000/reviews/664efb281455764c8fa644b1
