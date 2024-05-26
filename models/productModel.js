@@ -26,6 +26,10 @@ const Product = mongoose.Schema({
         type: String,
         required: true
     },
+    brand: {
+        type: String,
+        required: false
+    },
     stock: {
         type: Number,
         required: true
