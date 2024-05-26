@@ -33,6 +33,10 @@ Content-Type: application/json
 DELETE  http://localhost:3000/products/664ef362ad68ccc49738c06a
 
 ###
+
+GET http://localhost:3000/reviews
+
+###
 POST http://localhost:3000/products/665300bba666dc8c86916233/reviews
 Content-Type: application/json
 
@@ -73,4 +77,48 @@ Content-Type: application/json
 {
     "email": "admin@gmail.com",
     "password": "admbuildong"
+}
+
+###
+GET http://localhost:3000/constructions
+
+###
+POST http://localhost:3000/constructions
+Content-Type: application/json
+
+{
+    "design_name": "TS KITCHEN",
+    "location": "Depok",
+    "total_price": 20586004,
+    "image": "image.png",
+    "square_meters": 20,
+    "province": "West Java",
+    "style": "Minimalist",
+    "category": "Home",
+    "descriptions": "Home Made Kitchen",
+    "start": "2024-06-10",
+    "finish": "2025-05-10",
+    "constructor": 5,
+    "reviews": []
+}
+
+###
+PATCH http://localhost:3000/constructions/6653379ad57b4045e31bc88c
+Content-Type: application/json
+
+{
+    "category": "Office"
+}
+
+###
+POST http://localhost:3000/constructions/66533aa53474e37d77f6be0c/testimonials
+Content-Type: application/json
+
+{
+    "user": "Epoy",
+    "product_image": "http://example.com/product.jpg",
+    "rating": 3,
+    "desc": "Aku kasih bintang 3 dulu ya ka, barangnya belum sampai",
+    "like": 2,
+    "published_at": ""
 }
