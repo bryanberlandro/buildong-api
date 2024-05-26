@@ -9,19 +9,19 @@ const validatePassword = (password) => {
     const hasSpecialChar = /[!@#$%^&*(),.?":{}|<>]/.test(password);
 
     if (password.length < minLength) {
-        return msg = 'Password harus terdiri dari minimal 8 karakter.';
+        return msg = 'Password must be at least 8 characters long';
     }
     if (!hasUpperCase) {
-        return msg = 'Password harus mengandung setidaknya satu huruf besar.';
+        return msg = 'Password must contain at least one uppercase letter';
     }
     if (!hasLowerCase) {
-        return msg = 'Password harus mengandung setidaknya satu huruf kecil.';
+        return msg = 'Password must contain at least one lowercase letter';
     }
     if (!hasNumber) {
-        return msg = 'Password harus mengandung setidaknya satu angka.';
+        return msg = 'Password must contain at least one number';
     }
     if (!hasSpecialChar) {
-        return msg = 'Password harus mengandung setidaknya satu simbol khusus.';
+        return msg = 'Password must contain at least one special character (e.g., !, @, #, etc.)';
     }
     return msg;
 };
@@ -39,7 +39,7 @@ const regValid = (email, pw) => {
     const validPw = validatePassword(pw)
 
     if(validator.isEmpty(data.email)){
-        msg.push("Nama tidak boleh kosong")
+        msg.push("Email tidak boleh kosong")
     }
     if(!validator.isEmail(data.email)){
         msg.push("Email tidak valid")

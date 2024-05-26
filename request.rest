@@ -55,7 +55,7 @@ Content-Type: application/json
 
 {
     "email": "bryanberlandr@example.com",
-    "password": "Bryan123."
+    "password": "Bbbbbbbb1"
 }
 
 ###
@@ -72,6 +72,6 @@ POST http://localhost:3000/login
 Content-Type: application/json
 
 {
-    "email": "admin@gmail.com",
+    "email": "adm@123.com",
     "password": "admbuildong"
 }

@@ -5,6 +5,7 @@ import dotenv from 'dotenv'
 import bcrypt from 'bcrypt'
 import jwt from 'jsonwebtoken';
 import regValid from '../validation/regValidation.js';
+import loginValid from '../validation/loginValidation.js';
 dotenv.config();
 const authRouter = express.Router();
 const SECRET_KEY = process.env.SECRET_KEY
@@ -17,7 +18,7 @@ authRouter.post('/register', async (req, res) => {
         if(validation.msg.length > 0){
             return res.status(400).json({message: validation.msg})
         }
-        
+
         let user = await User.findOne({ email })
         console.log(user)
         if(user){
@@ -76,6 +77,11 @@ authRouter.post('/add-admin', async (req, res) => {
 authRouter.post('/login', async (req, res) => {
     const { email, password } = req.body;
     try {
+        const validation = await loginValid(email, password);
+        console.log(validation)
+        if(validation.msg.length > 0){
+            return res.status(400).json({message: validation.msg})
+        }
         let admin = await Admin.findOne({ email });
         if(admin){
             const isMatch = await bcrypt.compare(password, admin.password);

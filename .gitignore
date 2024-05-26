@@ -36,3 +36,5 @@ build/
 # Windows
 Thumbs.db
 .vercel
+
+request.rest

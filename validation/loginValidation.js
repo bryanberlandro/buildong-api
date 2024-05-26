@@ -12,13 +12,13 @@ const loginValid = (email, pw) => {
     let data = sanitization(email, pw)
 
     if(validator.isEmpty(data.email)){
-        msg.push("Nama tidak boleh kosong")
+        msg.push("Please enter your email address")
     }
     if(!validator.isEmail(data.email)){
-        msg.push("Email tidak valid")
+        msg.push("Please enter a valid email address")
     }
     if(validator.isEmpty(data.password)){
-        msg.push("Password tidak boleh kosong")
+        msg.push("Please enter your password")
     }
 
     return {msg, data}
