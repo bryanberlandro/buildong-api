@@ -34,7 +34,7 @@ The api can be accessed at 'http://localhost:3000' by default. Use an API client
 - POST /products
 - PATCH /products/:prodId
 - DELETE /products/:prodId
-``` json ```
+``` json
     {
   "products": [
     {
@@ -58,6 +58,7 @@ The api can be accessed at 'http://localhost:3000' by default. Use an API client
     "total_users": 1
   }
 }
+```
 
 ### Reviews
 - POST /products/:prodId/reviews
