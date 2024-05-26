@@ -1,8 +1,13 @@
 import mongoose from "../utils/db.js";
 
 const reviewSchema = mongoose.Schema({
-    user_id: {
+    user: {
         type: String,
+        required: true
+    },
+    product: {
+        type: mongoose.Schema.Types.ObjectId,
+        ref: 'Product',
         required: true
     },
     product_image: {

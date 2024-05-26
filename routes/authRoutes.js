@@ -29,7 +29,6 @@ authRouter.post('/register', async (req, res) => {
             email,
             password
         })
-
         await user.save();
 
         const payload = {
@@ -78,10 +77,10 @@ authRouter.post('/login', async (req, res) => {
     const { email, password } = req.body;
     try {
         const validation = await loginValid(email, password);
-        console.log(validation)
         if(validation.msg.length > 0){
             return res.status(400).json({message: validation.msg})
         }
+        
         let admin = await Admin.findOne({ email });
         if(admin){
             const isMatch = await bcrypt.compare(password, admin.password);

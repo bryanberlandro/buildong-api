@@ -15,7 +15,7 @@ Content-Type: application/json
 }
 
 ###
-GET http://localhost:3000/products/664eb7028c0392eaf87a05e4
+GET http://localhost:3000/products/665300bba666dc8c86916233
 
 ###
 PATCH http://localhost:3000/products/664ea3de33e78e730ca3bfb5
@@ -33,15 +33,14 @@ Content-Type: application/json
 DELETE  http://localhost:3000/products/664ef362ad68ccc49738c06a
 
 ###
-POST http://localhost:3000/products/664ee7b7cbf66463111828ee/reviews
+POST http://localhost:3000/products/665300bba666dc8c86916233/reviews
 Content-Type: application/json
 
 {
-    "name": "Pecinta Kursieee",
-    "user_image": "http://example.com/user.jpg",
+    "user": "Epoy",
     "product_image": "http://example.com/product.jpg",
-    "rating": 5,
-    "desc": "Kursinya Nyaman Banget",
+    "rating": 3,
+    "desc": "Aku kasih bintang 3 dulu ya ka, barangnya belum sampai",
     "like": 2,
     "published_at": ""
 }
@@ -72,6 +71,6 @@ POST http://localhost:3000/login
 Content-Type: application/json
 
 {
-    "email": "adm@123.com",
+    "email": "admin@gmail.com",
     "password": "admbuildong"
 }

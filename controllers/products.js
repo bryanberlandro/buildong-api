@@ -21,7 +21,7 @@ export const addProduct = async (req, res) => {
 
 export const getProduct = async (req, res) => {
     try{
-        const findProduct = await Product.findById(req.params.prodId).populate('reviews').exec();
+        const findProduct = await Product.findById(req.params.prodId).populate('reviews');
         res.status(200).json(findProduct)
     } catch(err){
         res.status(400).send({message: err.message})
