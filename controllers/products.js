@@ -3,7 +3,14 @@ import Product from "../models/productModel.js";
 export const getAllProducts = async (req, res) => {
     try {
         const products = await Product.find({})
-        res.json(products);
+        const productsData = {
+            "products": products,
+            "meta": {
+                "total_users": products.length
+            }
+        }
+        console.log(productsData)
+        res.status(200).json(productsData);
     } catch(err){
         res.status(500).send({message: err.message});
     }
