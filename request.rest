@@ -5,8 +5,8 @@ POST http://localhost:3000/products
 Content-Type: application/json
 
 {
-    "name": "Semen uhuy",
-    "image": "img/Semen.jpg",
+    "name": "Kursi",
+    "image": "img/KKursi.jpg",
     "desc": "Semen ini sangat bagus",
     "category": "Furniture",
     "stock": 10,
