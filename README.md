@@ -7,7 +7,6 @@ This backend project provides APIs for selling furniture items and offering cons
 ## Table of Contents
 
 - [Introduction](#introduction)
-- [Installation](#installation)
 - [Usage](#usage)
 - [API Endpoints](#api-endpoints)
   - [Authentication](#authentication)
@@ -18,18 +17,51 @@ This backend project provides APIs for selling furniture items and offering cons
 - [Technologies Used](#technologies-used)
 - [License](#license)
 
-## Installation
-
-1. Clone the repository:
-   ```bash
-   git clone https://github.com/yourusername/your-repo-name.git
-
 ## Usage
 The api can be accessed at 'http://localhost:3000' by default. Use an API client like postman or cURL to interact with the endpoints.
 
 ## API Endpoints
-    ```bash
-    POST /login
+### Authentication
+- POST /login
+    - return TOKEN
+- POST /register
+
+### Products
+- GET /products
+    - get all products
+- GET /products/:prodId
+    - get one product
+- POST /products
+- PATCH /products/:prodId
+- DELETE /products/:prodId
+``` json ```
+    {
+  "products": [
+    {
+      "_id": "665300bba666dc8c86916233",
+      "name": "Semen uhuy",
+      "reviews": [
+        "665302d7e94a55617a303650",
+        "66530440e94a55617a303656"
+      ],
+      "image": "img/Semen.jpg",
+      "desc": "Semen ini sangat bagus",
+      "item_sold": 0,
+      "category": "Furniture",
+      "stock": 10,
+      "unit_price": 50000,
+      "published_at": null,
+      "__v": 2
+    }
+  ],
+  "meta": {
+    "total_users": 1
+  }
+}
+
+### Reviews
+- POST /products/:prodId/reviews
+- DELETE /reviews/:reviewId
 
 ## Technologies Used
 
