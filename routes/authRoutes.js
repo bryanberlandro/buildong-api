@@ -4,14 +4,20 @@ import Admin from '../models/adminModel.js'
 import dotenv from 'dotenv'
 import bcrypt from 'bcrypt'
 import jwt from 'jsonwebtoken';
+import regValid from '../validation/regValidation.js';
 dotenv.config();
 const authRouter = express.Router();
 const SECRET_KEY = process.env.SECRET_KEY
 
 authRouter.post('/register', async (req, res) => {
     const { email, password } = req.body;
-    console.log(email)
     try {
+        const validation = await regValid(email, password);
+        console.log(validation)
+        if(validation.msg.length > 0){
+            return res.status(400).json({message: validation.msg})
+        }
+        
         let user = await User.findOne({ email })
         console.log(user)
         if(user){
