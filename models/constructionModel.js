@@ -10,7 +10,7 @@ const constructionSchema = mongoose.Schema({
         required: true
     },
     "total_price": {
-        type: String,
+        type: Number,
         required: true,
         default: 0
     },
@@ -25,6 +25,10 @@ const constructionSchema = mongoose.Schema({
     "province": {
         type: String,
         required: true,
+    },
+    "style": {
+        type: String,
+        required: true
     },
     "category": {
         type: String,
@@ -50,11 +54,15 @@ const constructionSchema = mongoose.Schema({
         }
     },
     constructor: {
-        type: String,
+        type: Number,
         required: true,
     },
-    reviews: []
+    reviews: [{
+        type: mongoose.Schema.Types.ObjectId,
+        ref: 'Testimonial',
+        required: false
+    }]
 })
 
-const Construction = mongoose.Model('Construction', constructionSchema);
+const Construction = mongoose.model('Construction', constructionSchema);
 export default Construction;
