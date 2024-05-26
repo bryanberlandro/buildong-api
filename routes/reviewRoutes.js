@@ -1,6 +1,7 @@
 import express from 'express';
 import Review from '../models/reviewModel.js';
 import Product from '../models/productModel.js';
+import getDuration from '../utils/getDuration.js';
 
 const reviewRouter = express.Router();
 
