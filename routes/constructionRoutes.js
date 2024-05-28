@@ -1,6 +1,4 @@
 import express from 'express';
-import Construction from '../models/constructionModel.js';
-import getDuration from '../utils/getDuration.js';
 import { storage } from '../config/cloudinaryConfig.js';
 import multer from 'multer';
 import { deleteConstruction, getAllConstructions, getOneConstruction, postConstruction, updateConstruction } from '../controllers/construction.js';

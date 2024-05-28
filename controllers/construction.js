@@ -1,4 +1,5 @@
 import Construction from "../models/constructionModel.js";
+import getDuration from "../utils/getDuration.js"
 
 export const getAllConstructions = async(req, res) => {
     try {
