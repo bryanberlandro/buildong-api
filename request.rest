@@ -83,6 +83,9 @@ Content-Type: application/json
 GET http://localhost:3000/constructions
 
 ###
+GET http://localhost:3000/constructions/66557e7eb2c791141f32b716
+
+###
 POST http://localhost:3000/constructions
 Content-Type: application/json
 
