@@ -24,6 +24,7 @@ This backend project provides APIs for selling furniture items and offering cons
 - MongoDB
 - Mongoose
 - JWT for authentication
+- Cloudinary
 
 ## Usage
 The api can be accessed at ```http://localhost:3000``` by default. Use an API client like postman or cURL to interact with the endpoints.
