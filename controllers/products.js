@@ -17,11 +17,13 @@ export const getAllProducts = async (req, res) => {
 }
 
 export const addProduct = async (req, res) => {
-    const newProduct = new Product(req.body)
+    const imageUrl = req.file.path
     try{
+        const newProduct = new Product({image: imageUrl, ...req.body})
         const insertedProduct = await newProduct.save()
-        res.status(200).json(insertedProduct)
+        res.status(200).json({message: 'Success add new product', status: 200, data: insertedProduct})
     } catch(err) {
+        console.log(err.message)
         res.status(400).send({message: err.message});
     }
 }
