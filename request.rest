@@ -30,14 +30,14 @@ Content-Type: application/json
 }
 
 ###
-DELETE  http://localhost:3000/products/664ef362ad68ccc49738c06a
+DELETE  http://localhost:3000/products/665359a35b90d75bcf1f22a4
 
 ###
 
 GET http://localhost:3000/reviews
 
 ###
-POST http://localhost:3000/products/665300bba666dc8c86916233/reviews
+POST http://localhost:3000/products/665583ce07e1e622ea8a5579/reviews
 Content-Type: application/json
 
 {

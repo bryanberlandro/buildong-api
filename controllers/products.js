@@ -6,10 +6,9 @@ export const getAllProducts = async (req, res) => {
         const productsData = {
             "products": products,
             "meta": {
-                "total_users": products.length
+                "total_products": products.length
             }
         }
-        console.log(productsData)
         res.status(200).json(productsData);
     } catch(err){
         res.status(500).send({message: err.message});
@@ -23,7 +22,6 @@ export const addProduct = async (req, res) => {
         const insertedProduct = await newProduct.save()
         res.status(200).json({message: 'Success add new product', status: 200, data: insertedProduct})
     } catch(err) {
-        console.log(err.message)
         res.status(400).send({message: err.message});
     }
 }
