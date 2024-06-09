@@ -35,9 +35,9 @@ export const getAllConstructions = async(req, res) => {
                 method: req.method
             })
         } else {
-            res.status(404).json({
+            res.status(200).json({
                 msg: "No data found",
-                status: "404",
+                status: "200",
                 data_length: allConstructions.length,
                 method: req.method
             })
