@@ -3,8 +3,45 @@ import getDuration from "../utils/getDuration.js"
 
 export const getAllConstructions = async(req, res) => {
     try {
-        const allConstructions = await Construction.find({})
-        res.status(200).json(allConstructions)
+        const { category, style, material, price_from, price_to } = req.query;
+        let query = {};
+
+        if (category) {
+            query.category = category;
+        }
+        if (style) {
+            query.style = style; 
+        }
+        if (material) {
+            query.material = material; 
+        }
+        if (price_from || price_to) {
+            query.total_price = {};
+            if (price_from) {
+                query.total_price.$gte = parseFloat(price_from); // Menggunakan $gte untuk harga minimal
+            }
+            if (price_to) {
+                query.total_price.$lte = parseFloat(price_to); // Menggunakan $lte untuk harga maksimal
+            }
+        }
+
+        const allConstructions = await Construction.find(query)
+        if(allConstructions.length > 0){
+            res.status(200).json({
+                msg: "Successfully get all data",
+                status: "200",
+                data_length: allConstructions.length,
+                data: allConstructions,
+                method: req.method
+            })
+        } else {
+            res.status(404).json({
+                msg: "No data found",
+                status: "404",
+                data_length: allConstructions.length,
+                method: req.method
+            })
+        }
     } catch(err) {
         res.status(500).json({message: err.message});
     }
