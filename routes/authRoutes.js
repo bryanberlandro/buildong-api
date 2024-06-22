@@ -97,7 +97,7 @@ authRouter.post('/login', async (req, res) => {
         if(user){
             const isMatch = await bcrypt.compare(password, user.password);
             if(!isMatch){
-                return res.status(400).json({message: 'Invalid Password'})
+                return res.status(400).json({message: 'Invalid Password. Please check your password and try again'})
             }
             const payload = {
                 user: {
@@ -108,12 +108,16 @@ authRouter.post('/login', async (req, res) => {
 
             jwt.sign(payload, SECRET_KEY, { expiresIn: '3d' }, (err, token) => {
                 if (err) throw err;
-                res.json({ token });
+                res.status(200).res.json({ 
+                    status: "200",
+                    message: 'Login successful! Welcome back '+user.email,
+                    token 
+                });
             });
             return;
         }
 
-        return res.status(400).json({ msg: 'Email not found, please register' });
+        return res.status(400).json({ message: 'Email not registered. Please sign up to create an account' });
     } catch(err){
         console.log(err)
     }
