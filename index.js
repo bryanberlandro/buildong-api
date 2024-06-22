@@ -10,7 +10,8 @@ app.use(cors(
   {
       origin: ['http://localhost:5173/', 'https://buildong-api.vercel.app/', 'https://buildong-pi.vercel.app'],
       methods: ["POST", "GET", "PATCH", "DELETE"],
-      credentials: true
+      credentials: true,
+      allowedHeaders: ['Content-Type', 'Authorization']
   }
 ))
 
