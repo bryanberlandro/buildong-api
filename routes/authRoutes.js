@@ -14,7 +14,6 @@ authRouter.post('/register', async (req, res) => {
     const { email, password } = req.body;
     try {
         const validation = await regValid(email, password);
-        console.log(validation)
         if(validation.msg.length > 0){
             return res.status(400).json({message: validation.msg})
         }
@@ -38,7 +37,7 @@ authRouter.post('/register', async (req, res) => {
             }
         };
 
-        jwt.sign(payload, SECRET_KEY, {expiresIn: "3h"}, (err, token) => {
+        jwt.sign(payload, SECRET_KEY, {expiresIn: "3d"}, (err, token) => {
             if (err) throw err;
             res.json({ token })
         })
@@ -65,7 +64,7 @@ authRouter.post('/add-admin', async (req, res) => {
 
         await admin.save();
 
-        res.json({ message: 'Admin account created successfully' });
+        res.status(200).res.json({ message: 'Admin account created successfully' });
 
     } catch (err) {
         console.error(err);
