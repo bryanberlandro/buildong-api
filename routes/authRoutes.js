@@ -90,7 +90,13 @@ authRouter.post('/login', async (req, res) => {
                 id: admin._id,
                 email: admin.email,
             })
-            res.status(200).json({account: someAdmin, message: 'Anda login sebagai admin'})
+            res.status(200).json({
+                id: someAdmin.id,
+                email: someAdmin.email,
+                role: "admin",
+                message: 'Anda login sebagai admin'
+            })
+            return;
         }
 
         let user = await User.findOne({ email });
@@ -103,6 +109,7 @@ authRouter.post('/login', async (req, res) => {
                 user: {
                     id: user._id,
                     email: user.email,
+                    role: "admin"
                 }
             }
 
@@ -111,7 +118,8 @@ authRouter.post('/login', async (req, res) => {
                 res.json({ 
                     status: "200",
                     message: 'Login successful! Welcome back '+user.email,
-                    token: token 
+                    token: token,
+                    role: "customer"
                 });
             });
             return;
