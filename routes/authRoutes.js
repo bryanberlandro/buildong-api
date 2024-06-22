@@ -86,25 +86,6 @@ authRouter.post('/login', async (req, res) => {
             if(!isMatch){
                 return res.status(400).json({message: 'Invalid Password'}) 
             }
-            const someAdmin = new Admin({
-                id: admin._id,
-                email: admin.email,
-            })
-            res.status(200).json({
-                id: someAdmin.id,
-                email: someAdmin.email,
-                role: "admin",
-                message: 'Anda login sebagai admin'
-            })
-            return;
-        }
-
-        let user = await User.findOne({ email });
-        if(user){
-            const isMatch = await bcrypt.compare(password, user.password);
-            if(!isMatch){
-                return res.status(400).json({message: 'Invalid Password. Please check your password and try again'})
-            }
             const payload = {
                 user: {
                     id: user._id,
@@ -119,7 +100,33 @@ authRouter.post('/login', async (req, res) => {
                     status: "200",
                     message: 'Login successful! Welcome back '+user.email,
                     token: token,
-                    role: "customer"
+                    role: "admin"
+                });
+            });
+            return;
+        }
+
+        let user = await User.findOne({ email });
+        if(user){
+            const isMatch = await bcrypt.compare(password, user.password);
+            if(!isMatch){
+                return res.status(400).json({message: 'Invalid Password. Please check your password and try again'})
+            }
+            const payload = {
+                user: {
+                    id: user._id,
+                    email: user.email,
+                    role: "user"
+                }
+            }
+
+            jwt.sign(payload, SECRET_KEY, { expiresIn: '3d' }, (err, token) => {
+                if (err) throw err;
+                res.json({ 
+                    status: "200",
+                    message: 'Login successful! Welcome back '+user.email,
+                    token: token,
+                    role: "user"
                 });
             });
             return;

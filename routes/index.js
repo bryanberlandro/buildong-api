@@ -6,6 +6,7 @@ import jwt from 'jsonwebtoken';
 import dotenv from 'dotenv'
 import constructRouter from './constructionRoutes.js';
 import testiRouter from './testimonialRoutes.js';
+import adminRouter from './adminRoutes.js';
 dotenv.config();
 const SECRET_KEY = process.env.SECRET_KEY
 const router = express.Router();
@@ -51,6 +52,7 @@ router.get('/', (req, res) => {
     res.json(initialPath)
 })
 
+router.use(adminRouter)
 router.use(testiRouter)
 router.use(constructRouter)
 router.use(reviewRouter)
