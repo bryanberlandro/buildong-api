@@ -8,7 +8,7 @@ const PORT = process.env.PORT || 3000;
 
 app.use(cors(
   {
-      origin: ['http://localhost:5173', 'https://buildong-api.vercel.app/', 'https://buildong-pi.vercel.app'],
+      origin: ['http://localhost:5173/', 'https://buildong-api.vercel.app/', 'https://buildong-pi.vercel.app'],
       methods: ["POST", "GET", "PATCH", "DELETE"],
       credentials: true
   }
