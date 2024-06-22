@@ -111,7 +111,7 @@ authRouter.post('/login', async (req, res) => {
                 res.status(200).res.json({ 
                     status: "200",
                     message: 'Login successful! Welcome back '+user.email,
-                    token 
+                    token: token 
                 });
             });
             return;
