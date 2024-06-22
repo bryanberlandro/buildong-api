@@ -108,7 +108,7 @@ authRouter.post('/login', async (req, res) => {
 
             jwt.sign(payload, SECRET_KEY, { expiresIn: '3d' }, (err, token) => {
                 if (err) throw err;
-                res.status(200).res.json({ 
+                res.json({ 
                     status: "200",
                     message: 'Login successful! Welcome back '+user.email,
                     token: token 
