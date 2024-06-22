@@ -88,8 +88,8 @@ authRouter.post('/login', async (req, res) => {
             }
             const payload = {
                 user: {
-                    id: user._id,
-                    email: user.email,
+                    id: admin._id,
+                    email: admin.email,
                     role: "admin"
                 }
             }
