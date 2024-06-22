@@ -5,7 +5,7 @@ const adminRouter = express.Router();
 
 adminRouter.get('/admin', verifyToken, async(req, res) => {
     try {
-        const isAdminExsist = await Admin.findById(req.userId, { password:0})
+        const isAdminExsist = await Admin.findById(req.userId, {password:0})
         if(!isAdminExsist){
             return res.status(404).json({msg: "User not found"})
         }
