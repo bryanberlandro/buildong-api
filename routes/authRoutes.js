@@ -6,6 +6,7 @@ import bcrypt from 'bcrypt'
 import jwt from 'jsonwebtoken';
 import regValid from '../validation/regValidation.js';
 import loginValid from '../validation/loginValidation.js';
+
 dotenv.config();
 const authRouter = express.Router();
 const SECRET_KEY = process.env.SECRET_KEY

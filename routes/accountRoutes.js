@@ -17,6 +17,19 @@ cloudinary.config({
     api_secret: process.env.CLOUDINARY_API_SECRET
 });
 
+accountRouter.get('/user', verifyToken, async (req, res) => {
+    try {
+        const user = await User.findById(req.userId).populate('account');
+        if (!user) {
+            return res.status(404).json({ message: 'User not found' });
+        }
+        res.status(200).json({ user });
+    } catch (error) {
+        res.status(500).json({ message: error.message });
+    }
+});
+
+
 accountRouter.get('/account', verifyToken, async(req, res) => {
     try {
         const account = await Account.findOne({ user: req.userId }).populate('user')
@@ -30,59 +43,54 @@ accountRouter.get('/account', verifyToken, async(req, res) => {
     }
 })
 
-accountRouter.post('/account', verifyToken, upload.single('photo'), async(req, res) => {
-    try {
-        const { username, phone, address } = req.body
-        const imgUrl = req.file.path
-        console.log(req.userId)
-        
-        if (username) {
-            const existingAccount = await Account.findOne({ username });
-            if (existingAccount) {
-                return res.status(400).json({ message: 'Username already exists' });
-            }
-        }
-
-        const newAccount = new Account({
-            username,
-            phone,
-            address,
-            profile_picture: imgUrl
-        })
-
-        const account = await Account.findOneAndUpdate(
-            { user: req.userId },
-            newAccount,
-            { new: true, upsert: true }
-        ).populate('user');
-
-
-        res.status(201).json({
-            status: 201,
-            message: 'Account saved successfully',
-            data: account,
-            method: req.method
-        })
-
-    } catch (error) {
-        res.status(500).json({message: error.message});
-    }
-})
-
-accountRouter.patch('/account', verifyToken, upload.single('photo'), async (req, res) => {
+accountRouter.post('/account', verifyToken, upload.single('photo'), async (req, res) => {
     try {
         const { username, phone, address } = req.body;
         const imgUrl = req.file ? req.file.path : null;
 
-        if (username) {
-            const existingAccount = await Account.findOne({ username, user: { $ne: accountId } });
-            if (existingAccount) {
-                return res.status(400).json({ message: 'Username already exists' });
-            }
+        const existingAccount = await Account.findOne({ username });
+        if (existingAccount) {
+            return res.status(400).json({ message: 'Username already exists' });
+        }
+
+        const newAccount = new Account({
+            user: req.userId,
+            username,
+            phone,
+            address,
+            profile_picture: imgUrl
+        });
+        await newAccount.save();
+
+        const user = await User.findById(req.userId);
+        user.account = newAccount._id;
+        await user.save();
+
+        res.status(201).json({
+            status: 201,
+            message: 'Account created successfully',
+            data: newAccount,
+            method: req.method
+        });
+
+    } catch (error) {
+        res.status(500).json({ message: error.message });
+    }
+});
+
+
+accountRouter.patch('/account/', verifyToken, upload.single('photo'), async (req, res) => {
+    try {
+        const { username, phone, address } = req.body;
+        const imgUrl = req.file ? req.file.path : null;
+
+        // Cek jika username sudah ada dan tidak milik user lain
+        const existingAccount = await Account.findOne({ username, user: { $ne: req.userId } });
+        if (existingAccount) {
+            return res.status(400).json({ message: 'Username already exists' });
         }
 
         const updateData = {};
-
         if (username) updateData.username = username;
         if (phone) updateData.phone = phone;
         if (address) updateData.address = address;
@@ -92,7 +100,7 @@ accountRouter.patch('/account', verifyToken, upload.single('photo'), async (req,
             { user: req.userId },
             updateData,
             { new: true }
-        ).populate('user');
+        );
 
         if (!account) {
             return res.status(404).json({ message: 'Account not found' });
@@ -109,6 +117,7 @@ accountRouter.patch('/account', verifyToken, upload.single('photo'), async (req,
         res.status(500).json({ message: error.message });
     }
 });
+
 
 accountRouter.delete('/account', verifyToken, async (req, res) => {
     try {

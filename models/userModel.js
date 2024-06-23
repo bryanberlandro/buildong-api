@@ -11,6 +11,10 @@ const UserSchema = mongoose.Schema({
         type: String,
         required: true,
     },
+    "account": {
+        type: mongoose.Schema.Types.ObjectId,
+        ref: 'Account'
+    },
     "registered_at": {
         type: Date,
         default: Date.now()
