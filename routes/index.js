@@ -7,6 +7,7 @@ import dotenv from 'dotenv'
 import constructRouter from './constructionRoutes.js';
 import testiRouter from './testimonialRoutes.js';
 import adminRouter from './adminRoutes.js';
+import accountRouter from './accountRoutes.js';
 dotenv.config();
 const SECRET_KEY = process.env.SECRET_KEY
 const router = express.Router();
@@ -53,6 +54,7 @@ router.get('/', (req, res) => {
 })
 
 router.use(adminRouter)
+router.use(accountRouter)
 router.use(testiRouter)
 router.use(constructRouter)
 router.use(reviewRouter)

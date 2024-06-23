@@ -11,8 +11,8 @@ export const verifyToken = (req, res, next) => {
     try {
         const decoded = jwt.verify(token, process.env.SECRET_KEY);
         req.userId = decoded.user.id;
+        req.userEmail = decoded.user.email
         req.userType = decoded.user.role;
-        console.log("decoded: " + decoded)
         next();
     } catch (error) {
         return res.status(401).json({ message: 'Token tidak valid' });
