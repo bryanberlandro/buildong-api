@@ -84,7 +84,6 @@ accountRouter.patch('/account/', verifyToken, upload.single('photo'), async (req
         const { username, phone, address } = req.body;
         const imgUrl = req.file ? req.file.path : null;
 
-        // Cek jika username sudah ada dan tidak milik user lain
         const existingAccount = await Account.findOne({ username, user: { $ne: req.userId } });
         if (existingAccount) {
             return res.status(400).json({ message: 'Username already exists' });
