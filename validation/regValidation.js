@@ -43,8 +43,10 @@ const regValid = (email, pw) => {
     if(validator.isEmpty(data.password)){
         msg.push("Password tidak boleh kosong")
     }
-    if(!validator.isStrongPassword(data.password)){
-        msg.push(validPw)
+    if(validator.isEmpty(data.password)){
+        msg.push("Password tidak boleh kosong");
+    } else if(validPw){
+        msg.push(validPw);
     }
     return {msg, data}
 }
