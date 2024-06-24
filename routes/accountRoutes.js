@@ -5,7 +5,7 @@ import Account from '../models/accountModel.js';
 import { storage } from '../config/cloudinaryConfig.js';
 import dotenv from 'dotenv';
 import multer from 'multer';
-import cloudinary from 'cloudinary'
+import { v2 as cloudinary } from 'cloudinary';
 const accountRouter = express.Router();
 const upload = multer({storage: storage})
 
