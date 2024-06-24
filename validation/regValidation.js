@@ -35,16 +35,13 @@ const regValid = (email, pw) => {
     const validPw = validatePassword(pw)
 
     if(validator.isEmpty(data.email)){
-        msg.push("Email tidak boleh kosong")
+        msg.push("Email cannot be empty")
     }
     if(!validator.isEmail(data.email)){
-        msg.push("Email tidak valid")
+        msg.push("Invalid email address")
     }
     if(validator.isEmpty(data.password)){
-        msg.push("Password tidak boleh kosong")
-    }
-    if(validator.isEmpty(data.password)){
-        msg.push("Password tidak boleh kosong");
+        msg.push("Password cannot be empty");
     } else if(validPw){
         msg.push(validPw);
     }
