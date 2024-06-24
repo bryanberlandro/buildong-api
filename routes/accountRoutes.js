@@ -127,7 +127,7 @@ accountRouter.delete('/account', verifyToken, async (req, res) => {
 
         if (account.profile_picture) {
             const publicId = account.profile_picture.split('/').pop().split('.')[0];
-            await cloudinary.v2.uploader.destroy(publicId, (error, result) => {
+            await cloudinary.uploader.destroy(publicId, (error, result) => {
                 if (error) {
                     return res.status(500).json({ message: error.message });
                 }
@@ -155,7 +155,7 @@ accountRouter.delete('/account/profile-picture', verifyToken, async (req, res) =
 
         if (account.profile_picture) {
             const publicId = account.profile_picture.split('/').pop().split('.')[0];
-            await cloudinary.v2.uploader.destroy(publicId, (error, result) => {
+            await cloudinary.uploader.destroy(publicId, (error, result) => {
                 if (error) {
                     return res.status(500).json({ message: error.message });
                 }
