@@ -81,54 +81,42 @@ accountRouter.post('/account', verifyToken, upload.single('photo'), async (req, 
 
 accountRouter.patch('/account', verifyToken, upload.single('photo'), async (req, res) => {
     try {
-      const { username, phone, address } = req.body;
-      const imgUrl = req.file ? req.file.path : null;
-      const publicId = req.file ? req.file.filename : null; // Ambil public_id dari file yang di-upload
-  
-      // Cari akun berdasarkan user ID
-      const account = await Account.findOne({ user: req.userId });
-      if (!account) {
-        return res.status(404).json({ message: 'Account not found' });
-      }
-  
-      // Periksa apakah username sudah digunakan oleh user lain
-      const existingAccount = await Account.findOne({ username, user: { $ne: req.userId } });
-      if (existingAccount) {
-        return res.status(400).json({ message: 'Username already exists' });
-      }
-  
-      // Jika ada foto baru, hapus foto lama dari Cloudinary
-      if (imgUrl && account.profile_picture) {
-        const oldPublicId = account.profile_picture.split('/').pop().split('.')[0]; // Ambil public_id dari URL lama
-        await cloudinary.uploader.destroy(oldPublicId);
-      }
-  
-      const updateData = {
-        username: username || account.username,
-        phone: phone || account.phone,
-        address: address || account.address,
-        profile_picture: imgUrl || account.profile_picture
-      };
-  
-      // Update data akun
-      const updatedAccount = await Account.findOneAndUpdate(
-        { user: req.userId },
-        updateData,
-        { new: true }
-      );
-  
-      res.status(200).json({
-        status: 200,
-        message: 'Account updated successfully',
-        data: updatedAccount,
-        method: req.method
-      });
-  
+        const { username, phone, address } = req.body;
+        const imgUrl = req.file ? req.file.path : null;
+
+        const existingAccount = await Account.findOne({ username, user: { $ne: req.userId } });
+        if (existingAccount) {
+            return res.status(400).json({ message: 'Username already exists' });
+        }
+
+        const updateData = {};
+        if (username) updateData.username = username;
+        if (phone) updateData.phone = phone;
+        if (address) updateData.address = address;
+        if (imgUrl) updateData.profile_picture = imgUrl;
+
+        const account = await Account.findOneAndUpdate(
+            { user: req.userId },
+            updateData,
+            { new: true }
+        );
+
+        if (!account) {
+            return res.status(404).json({ message: 'Account not found' });
+        }
+
+        res.status(200).json({
+            status: 200,
+            message: 'Account updated successfully',
+            data: account,
+            method: req.method
+        });
+
     } catch (error) {
-      res.status(500).json({ message: error.message });
+        res.status(500).json({ message: error.message });
     }
-  });
-  
+});
+
 
 accountRouter.delete('/account', verifyToken, async (req, res) => {
     try {
@@ -151,6 +139,34 @@ accountRouter.delete('/account', verifyToken, async (req, res) => {
         res.status(200).json({
             status: 200,
             message: 'Account and user deleted successfully',
+            method: req.method
+        });
+    } catch (error) {
+        res.status(500).json({ message: error.message });
+    }
+});
+
+accountRouter.delete('/account/profile-picture', verifyToken, async (req, res) => {
+    try {
+        const account = await Account.findOne({ user: req.userId });
+        if (!account) {
+            return res.status(404).json({ message: 'Account not found' });
+        }
+
+        if (account.profile_picture) {
+            const publicId = account.profile_picture.split('/').pop().split('.')[0];
+            await cloudinary.v2.uploader.destroy(publicId, (error, result) => {
+                if (error) {
+                    return res.status(500).json({ message: error.message });
+                }
+            });
+            account.profile_picture = null;
+            await account.save();
+        }
+
+        res.status(200).json({
+            status: 200,
+            message: 'Profile picture deleted successfully',
             method: req.method
         });
     } catch (error) {
