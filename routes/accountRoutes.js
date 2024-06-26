@@ -101,16 +101,16 @@ accountRouter.patch('/account', verifyToken, upload.single('photo'), async (req,
             { new: true }
         );
 
-        if (!account) {
-            return res.status(404).json({ message: 'Account not found' });
+        if(!account){
+            return res.status(404).json({message: 'Account not found'});
         }
 
         res.status(200).json({
+            message: "Account updated successfully",
             status: 200,
-            message: 'Account updated successfully',
-            data: account,
+            data: updateData,
             method: req.method
-        });
+        })
 
     } catch (error) {
         res.status(500).json({ message: error.message });

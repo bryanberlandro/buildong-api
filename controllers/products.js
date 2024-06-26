@@ -16,9 +16,15 @@ export const getAllProducts = async (req, res) => {
 }
 
 export const addProduct = async (req, res) => {
-    const imageUrl = req.file.path
+    console.log(req.files)
     try{
-        const newProduct = new Product({image: imageUrl, ...req.body})
+        const files = req.files;
+        if (!files) {
+            return res.status(400).json({ message: 'No files uploaded' });
+        }
+        const photoUrls = files.map(file => file.path); 
+
+        const newProduct = new Product({image: photoUrls, ...req.body})
         const insertedProduct = await newProduct.save()
         res.status(200).json({message: 'Success add new product', status: 200, data: insertedProduct})
     } catch(err) {

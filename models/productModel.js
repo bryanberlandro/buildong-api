@@ -9,10 +9,10 @@ const Product = mongoose.Schema({
         type: mongoose.Schema.Types.ObjectId,
         ref: 'Review'
     }],
-    image: {
+    image: [{
         type: String,
         required: true
-    },
+    }],
     desc: {
         type: String,
         required: true

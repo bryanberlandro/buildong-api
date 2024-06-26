@@ -10,10 +10,6 @@ const reviewSchema = mongoose.Schema({
         ref: 'Product',
         required: true
     },
-    product_image: {
-        type: String,
-        required: false
-    },
     rating: {
         type: Number,
         default: 0,
