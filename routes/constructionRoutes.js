@@ -6,7 +6,7 @@ const constructRouter = express.Router();
 const upload = multer({storage: storage})
 
 constructRouter.get('/constructions', getAllConstructions)
-constructRouter.post('/constructions/upload', upload.single('photo'), postConstruction)
+constructRouter.post('/constructions/upload', upload.array('photo', 3), postConstruction)
 
 constructRouter.route('/constructions/:constructionId')
     .get(getOneConstruction)

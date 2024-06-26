@@ -14,10 +14,10 @@ const constructionSchema = mongoose.Schema({
         required: true,
         default: 0
     },
-    "image": {
+    "image": [{
         type: String,
         required: true,
-    },
+    }],
     "square_meters": {
         type: Number,
         required: true,
