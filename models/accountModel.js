@@ -6,6 +6,14 @@ const AccountSchema = mongoose.Schema({
         ref: "User",
         unique: true
     },
+    "construction_orders": [{
+        type: mongoose.Schema.Types.ObjectId,
+        ref: "ConstructionOrder"
+    }],
+    "product_orders": [{
+        type: mongoose.Schema.Types.ObjectId,
+        ref: "ProductOrder"
+    }],
     "username": {
         type: String,
         required: false,
@@ -28,12 +36,6 @@ const AccountSchema = mongoose.Schema({
         default: 0,
         required: false
     },
-    "order_history" : [
-        {
-            "order_type": { type: String, enum: ['construction', 'product'], required: true },
-            "order_id": { type: mongoose.Schema.Types.ObjectId, required: true }
-        }
-    ]
 })
 
 const Account = mongoose.model('Account', AccountSchema)

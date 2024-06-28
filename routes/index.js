@@ -8,6 +8,8 @@ import constructRouter from './constructionRoutes.js';
 import testiRouter from './testimonialRoutes.js';
 import adminRouter from './adminRoutes.js';
 import accountRouter from './accountRoutes.js';
+import constructOrderRouter from './constructOrderRoutes.js';
+import productOrderRouter from './productOrderRoutes.js';
 dotenv.config();
 const SECRET_KEY = process.env.SECRET_KEY
 const router = express.Router();
@@ -59,6 +61,8 @@ router.use(testiRouter)
 router.use(constructRouter)
 router.use(reviewRouter)
 router.use(prodRouter)
+router.use(constructOrderRouter)
+router.use(productOrderRouter)
 router.use(authRouter) //token ware 
 
 export default router

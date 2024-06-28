@@ -32,8 +32,7 @@ accountRouter.get('/user', verifyToken, async (req, res) => {
 
 accountRouter.get('/account', verifyToken, async(req, res) => {
     try {
-        const account = await Account.findOne({ user: req.userId }).populate('user')
-        console.log(account)
+        const account = await Account.findOne({ user: req.userId }).populate('user').populate('construction_orders').populate('product_orders')
         if (!account) {
             return res.status(404).json({ message: 'Account not found' });
         }
