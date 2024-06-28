@@ -22,7 +22,18 @@ const AccountSchema = mongoose.Schema({
     "profile_picture": {
         type: String,
         required: false,
-    }
+    },
+    "points": {
+        type: Number,
+        default: 0,
+        required: false
+    },
+    "order_history" : [
+        {
+            "order_type": { type: String, enum: ['construction', 'product'], required: true },
+            "order_id": { type: mongoose.Schema.Types.ObjectId, required: true }
+        }
+    ]
 })
 
 const Account = mongoose.model('Account', AccountSchema)

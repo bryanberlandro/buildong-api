@@ -22,10 +22,6 @@ const constructionSchema = mongoose.Schema({
         type: Number,
         required: true,
     },
-    "province": {
-        type: String,
-        required: true,
-    },
     "style": {
         type: String,
         required: true
@@ -38,26 +34,15 @@ const constructionSchema = mongoose.Schema({
         type: String,
         required: true
     },
-    "project_timeline": {
-        "start": {
-            type: Date,
-            default: Date.now(),
-            required: false
-        },
-        "finish": {
-            type: Date,
-            required: true
-        },
-        "duration": {
+    "project_duration": {
             type: String,
             required: true
-        }
     },
-    constructor: {
+    "constructor": {
         type: Number,
         required: true,
     },
-    reviews: [{
+    "reviews": [{
         type: mongoose.Schema.Types.ObjectId,
         ref: 'Testimonial',
         required: false
