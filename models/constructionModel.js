@@ -34,13 +34,13 @@ const constructionSchema = mongoose.Schema({
         type: String,
         required: true
     },
+    "worker": {
+        type: String,
+        required: true,
+    },
     "project_duration": {
         type: String,
         required: true
-    },
-    "constructor": {
-        type: String,
-        required: true,
     },
     "reviews": [{
         type: mongoose.Schema.Types.ObjectId,
