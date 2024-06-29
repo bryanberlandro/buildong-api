@@ -11,6 +11,7 @@ const ConstructOrderSchema = mongoose.Schema({
     furniture_cost: { type: Number, required: true},
     location: { type: String, required: true },
     address: { type: String, required: true },
+    payment_method: { type: String, required: true },
     total_price: { type: Number, required: true },
     image: [{ type: String, required: true }],
     square_meters: { type: Number, required: true },
