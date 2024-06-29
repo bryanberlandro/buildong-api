@@ -39,7 +39,7 @@ const constructionSchema = mongoose.Schema({
         required: true
     },
     "constructor": {
-        type: Number,
+        type: String,
         required: true,
     },
     "reviews": [{
