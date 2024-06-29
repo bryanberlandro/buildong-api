@@ -20,6 +20,12 @@ constructOrderRouter.get('/:accountId/construction-orders', async(req, res) => {
     }
 })
 
+function generateOrderId() {
+    const timestamp = Date.now();
+    const randomPart = Math.random().toString(36).substring(2, 8);
+    return `ORD-${timestamp}-${randomPart}`.toUpperCase();
+}
+
 constructOrderRouter.post('/:accountId/construction-orders', async(req, res) => {
     try {
         const account = await Account.findById({_id: req.params.accountId});
@@ -28,7 +34,8 @@ constructOrderRouter.post('/:accountId/construction-orders', async(req, res) => 
         }
         const newOrder = new ConstructionOrder({
             ...req.body,
-            account_id: req.params.accountId
+            account_id: req.params.accountId,
+            order_id: generateOrderId()
         })
 
         const savedOrder = await newOrder.save();
