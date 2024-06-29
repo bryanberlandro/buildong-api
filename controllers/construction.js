@@ -57,8 +57,7 @@ export const getOneConstruction = async (req, res) => {
 }
 
 export const postConstruction = async(req, res) => {
-    const {start, finish, ...rest} = req.body
-    const sumDuration = await getDuration(start, finish)
+    const {...rest} = req.body
     
     try{
         const files = req.files;
@@ -67,7 +66,6 @@ export const postConstruction = async(req, res) => {
         }
         const photoUrls = files.map(file => file.path);
         const newConstruction = new Construction({
-            project_timeline: {start, finish, duration: sumDuration},
             image: photoUrls,
             ...rest
         })
