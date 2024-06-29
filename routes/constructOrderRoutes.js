@@ -40,7 +40,7 @@ function generateOrderId() {
 
             const savedOrder = await newOrder.save();
 
-            const pointsToAdd = Math.floor(savedOrder.total_price / 100000);
+            const pointsToAdd = Math.floor(savedOrder.total_price / 10000);
             account.points += pointsToAdd;
             account.construction_orders.push(savedOrder._id);
 
