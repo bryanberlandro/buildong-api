@@ -57,17 +57,16 @@ export const getOneConstruction = async (req, res) => {
 }
 
 export const postConstruction = async(req, res) => {
-    const {...rest} = req.body
-    
     try{
         const files = req.files;
+        console.log(req.body)
         if (!files) {
             return res.status(400).json({ message: 'No files uploaded' });
         }
         const photoUrls = files.map(file => file.path);
         const newConstruction = new Construction({
             image: photoUrls,
-            ...rest
+            ...req.body
         })
         await newConstruction.save();
         res.status(200).json({message: 'Success adding data', status: 200, data: newConstruction})

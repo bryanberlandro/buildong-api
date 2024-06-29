@@ -35,8 +35,8 @@ const constructionSchema = mongoose.Schema({
         required: true
     },
     "project_duration": {
-            type: String,
-            required: true
+        type: String,
+        required: true
     },
     "constructor": {
         type: Number,
