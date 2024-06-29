@@ -26,36 +26,36 @@ function generateOrderId() {
     return `ORD-${timestamp}-${randomPart}`.toUpperCase();
 }
 
-constructOrderRouter.post('/:accountId/construction-orders', async(req, res) => {
-    try {
-        const account = await Account.findById({_id: req.params.accountId});
-        if(!account){
-            return res.status(404).json({message: 'Account not found'})
+    constructOrderRouter.post('/:accountId/construction-orders', async(req, res) => {
+        try {
+            const account = await Account.findById({_id: req.params.accountId});
+            if(!account){
+                return res.status(404).json({message: 'Account not found'})
+            }
+            const newOrder = new ConstructionOrder({
+                ...req.body,
+                account_id: req.params.accountId,
+                order_id: generateOrderId()
+            })
+
+            const savedOrder = await newOrder.save();
+
+            const pointsToAdd = Math.floor(savedOrder.total_price / 100000);
+            account.points += pointsToAdd;
+            account.construction_orders.push(savedOrder._id);
+
+            await account.save();
+
+            res.status(201).json({
+                status: 201,
+                message: 'Successfully created construction order and updated points',
+                data: savedOrder,
+                pointsAdded: pointsToAdd,
+                method: req.method
+            });
+        } catch (error) {
+            res.status(500).json({message: error.message});
         }
-        const newOrder = new ConstructionOrder({
-            ...req.body,
-            account_id: req.params.accountId,
-            order_id: generateOrderId()
-        })
-
-        const savedOrder = await newOrder.save();
-
-        const pointsToAdd = Math.floor(savedOrder.total_price / 100000);
-        account.points += pointsToAdd;
-        account.construction_orders.push(savedOrder._id);
-
-        await account.save();
-
-        res.status(201).json({
-            status: 201,
-            message: 'Successfully created construction order and updated points',
-            data: savedOrder,
-            pointsAdded: pointsToAdd,
-            method: req.method
-        });
-    } catch (error) {
-        res.status(500).json({message: error.message});
-    }
-})
+    })
 
 export default constructOrderRouter
