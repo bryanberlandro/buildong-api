@@ -22,7 +22,12 @@ constructOrderRouter.get('/:accountId/construction-orders', async(req, res) => {
 
 constructOrderRouter.get('/:accountId/construction-orders/:status', async(req, res) => {
     try {
-        const orders = await ConstructionOrder.find({status: req.params.status, account_id: req.params.accountId})
+        let orders;
+        if(req.params.status == 'all'){
+            orders = await ConstructionOrder.find({account_id: req.params.accountId})
+        } else {
+            orders = await ConstructionOrder.find({status: req.params.status, account_id: req.params.accountId})
+        }
         if(orders.length === 0){
             return res.status(404).json({message: 'Couldn\'t find any '+req.params.status+' orders' })
         }
