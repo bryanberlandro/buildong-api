@@ -18,7 +18,7 @@ const ConstructOrderSchema = mongoose.Schema({
     style: { type: String, required: true },
     category: { type: String, required: true },
     order_date: { type: Date, default: Date.now },
-    status: { type: String, enum: ['Packed', 'Shipped', 'Completed'], default: 'Packed' }
+    status: { type: String, enum: ['packed', 'shipped', 'completed'], default: 'packed' }
 })
 
 const ConstructionOrder = mongoose.model('ConstructionOrder', ConstructOrderSchema)
