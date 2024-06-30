@@ -20,7 +20,7 @@ constructOrderRouter.get('/:accountId/construction-orders', async(req, res) => {
     }
 })
 
-constructOrderRouter.get('/:accountId/construction-orders/:orderId', async(req, res) => {
+constructOrderRouter.get('/construction-orders/:orderId', async(req, res) => {
     try {
         const selectedOrder = await ConstructionOrder.find({order_id: req.params.orderId})
         if(!selectedOrder){
