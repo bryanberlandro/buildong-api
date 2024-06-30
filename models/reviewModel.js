@@ -5,6 +5,10 @@ const reviewSchema = mongoose.Schema({
         type: String,
         required: true
     },
+    user_image: {
+        type: String,
+        required: true
+    },
     product: {
         type: mongoose.Schema.Types.ObjectId,
         ref: 'Product',
