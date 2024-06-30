@@ -1,8 +1,8 @@
 import express from 'express';
 import { verifyToken } from '../middleware/middleware.js';
 import Admin from '../models/adminModel.js';
-import ConstructionOrder from '../models/constructOrderModel.js';
 import ProductOrder from '../models/productOrderModel.js';
+import Construction from '../models/constructionModel.js';
 const adminRouter = express.Router();
 
 adminRouter.get('/admin', verifyToken, async(req, res) => {
@@ -25,7 +25,8 @@ adminRouter.get('/admin', verifyToken, async(req, res) => {
 
 adminRouter.get('/construction-orders/completed', async (req, res) => {
     try {
-        const completedOrders = await ConstructionOrder.find({ status: 'Completed' });
+        const completedOrders = await Construction.find({ 'reviews.0': { $exists: true } })
+            .populate('reviews');
         if(completedOrders.length > 0){
             res.status(200).json({
                 msg: "Successfully get completed construction orders",
