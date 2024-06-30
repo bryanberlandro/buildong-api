@@ -23,13 +23,8 @@ adminRouter.get('/admin', verifyToken, async(req, res) => {
     }
 })
 
-adminRouter.get('/admin/construction-orders/completed', verifyToken, async (req, res) => {
+adminRouter.get('construction-orders/completed', async (req, res) => {
     try {
-        const isAdminExist = await Admin.findById(req.userId, { password: 0 });
-        if (!isAdminExist) {
-            return res.status(404).json({ msg: "User not found" });
-        }
-
         const completedOrders = await ConstructionOrder.find({ status: 'Completed' });
         if(completedOrders.length > 0){
             res.status(200).json({
@@ -49,13 +44,8 @@ adminRouter.get('/admin/construction-orders/completed', verifyToken, async (req,
     }
 });
 
-adminRouter.get('/admin/product-orders/completed', verifyToken, async (req, res) => {
+adminRouter.get('/product-orders/completed', async (req, res) => {
     try {
-        const isAdminExist = await Admin.findById(req.userId, { password: 0 });
-        if (!isAdminExist) {
-            return res.status(404).json({ msg: "User not found" });
-        }
-
         const completedOrders = await ProductOrder.find({ status: 'Completed' });
         if(completedOrders.length > 0){
             res.status(200).json({
