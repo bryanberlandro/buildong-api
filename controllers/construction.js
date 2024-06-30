@@ -18,10 +18,10 @@ export const getAllConstructions = async(req, res) => {
         if (price_from || price_to) {
             query.total_price = {};
             if (price_from) {
-                query.total_price.$gte = parseFloat(price_from); // Menggunakan $gte untuk harga minimal
+                query.total_price.$gte = parseFloat(price_from); 
             }
             if (price_to) {
-                query.total_price.$lte = parseFloat(price_to); // Menggunakan $lte untuk harga maksimal
+                query.total_price.$lte = parseFloat(price_to);
             }
         }
 

@@ -30,6 +30,10 @@ const Product = mongoose.Schema({
         type: String,
         required: false
     },
+    material: {
+        type: String,
+        required: true,
+    },
     stock: {
         type: Number,
         required: true

@@ -2,14 +2,45 @@ import Product from "../models/productModel.js";
 
 export const getAllProducts = async (req, res) => {
     try {
-        const products = await Product.find({});
-        const productsData = {
-            "products": products,
-            "meta": {
-                "total_products": products.length
+        const { category, brand, material, price_from, price_to } = req.query;
+        let query = {};
+
+        if (category) {
+            query.category = category;
+        }
+        if (brand) {
+            query.brand = brand; 
+        }
+        if (material) {
+            query.material = material; 
+        }
+        if (price_from || price_to) {
+            query.unit_price = {};
+            if (price_from) {
+                query.unit_price.$gte = parseFloat(price_from); 
+            }
+            if (price_to) {
+                query.unit_price.$lte = parseFloat(price_to); 
             }
         }
-        res.status(200).json(productsData);
+
+        const products = await Product.find(query);
+        if(products.length > 0){
+            res.status(200).json({
+                msg: "Successfully get all data",
+                status: "200",
+                data_length: products.length,
+                data: products,
+                method: req.method
+            })
+        } else {
+            res.status(200).json({
+                msg: "No data found",
+                status: "200",
+                data_length: products.length,
+                method: req.method
+            })
+        }
     } catch(err){
         res.status(500).send({message: err.message});
     }
