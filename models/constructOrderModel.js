@@ -2,6 +2,7 @@ import mongoose from "../utils/db.js";
 
 const ConstructOrderSchema = mongoose.Schema({
     account_id: { type: mongoose.Schema.Types.ObjectId, ref: 'Account', required: true },
+    product_id: { type: String, required: true},
     order_id: { type: String, required: true, },
     project_start: { type: Date, required: true },
     project_duration: { type: String, required: true },
