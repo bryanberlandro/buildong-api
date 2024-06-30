@@ -23,7 +23,7 @@ adminRouter.get('/admin', verifyToken, async(req, res) => {
     }
 })
 
-adminRouter.get('construction-orders/completed', async (req, res) => {
+adminRouter.get('/construction-orders/completed', async (req, res) => {
     try {
         const completedOrders = await ConstructionOrder.find({ status: 'Completed' });
         if(completedOrders.length > 0){
