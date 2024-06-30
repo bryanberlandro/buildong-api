@@ -15,11 +15,7 @@ reviewRouter.get('/reviews', async(req, res) => {
 })
 
 reviewRouter.post('/products/:prodId/reviews', async(req, res) => {
-    const {user, product_image, rating, desc, like} = req.body;
     const prodId = req.params.prodId;
-    // if(product_image.length > 2){
-    //     return res.status(400).json({message: "Maksimal 2 gambar"});
-    // }
 
     try {
         const product = await Product.findById(prodId);
@@ -27,14 +23,7 @@ reviewRouter.post('/products/:prodId/reviews', async(req, res) => {
             return res.status(404).json({ message: "Produk tidak ditemukan" });
         }
 
-        const newReview = new Review({
-            user,
-            product_image,
-            rating,
-            desc,
-            like,
-            product: prodId
-        })
+        const newReview = new Review(req.body)
 
         const sendReview = await newReview.save()
         product.reviews.push(sendReview._id);
