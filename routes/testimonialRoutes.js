@@ -22,7 +22,7 @@ testiRouter.post('/constructions/:constructionId/testimonials', async(req, res) 
             return res.status(404).json({ message: "Produk tidak ditemukan" });
         }
 
-        const newTestimonials = new Testimonial({construction: params, ...req.body});
+        const newTestimonials = new Testimonial(req.body);
         const sendTestimonials = await newTestimonials.save()
         construct.reviews.push(sendTestimonials._id);
 

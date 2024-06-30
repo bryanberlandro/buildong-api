@@ -1,18 +1,21 @@
 import mongoose from "../utils/db.js";
 
 const testimonialSchema = mongoose.Schema({
-    user: {
+    username: {
         type: String,
         required: true
     },
-    construction: {
-        type: mongoose.Schema.Types.ObjectId,
-        ref: 'Construction',
+    user_image: {
+        type: String,
         required: true
     },
-    product_image: {
+    construction_id: {
         type: String,
-        required: false
+        required: true
+    },
+    construction_name: {
+        type: String,
+        required: true
     },
     rating: {
         type: Number,

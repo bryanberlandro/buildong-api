@@ -14,7 +14,7 @@ reviewRouter.get('/reviews', async(req, res) => {
     }
 })
 
-reviewRouter.post('/products/:prodId/reviews', async(req, res) => {
+reviewRouter.post('/construction/:prodId/reviews', async(req, res) => {
     const prodId = req.params.prodId;
 
     try {
