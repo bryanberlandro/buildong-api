@@ -20,6 +20,23 @@ constructOrderRouter.get('/:accountId/construction-orders', async(req, res) => {
     }
 })
 
+constructOrderRouter.get('/:accountId/construction_orders/:orderId', async(req, res) => {
+    try {
+        const selectedOrder = await ConstructionOrder.find({order_id: req.params.orderId})
+        if(!selectedOrder){
+            return res.status(404).json({message: 'Order not found'})
+        }
+        res.status(200).json({
+            status: 200,
+            message: 'Successfully get all construction order',
+            data: selectedOrder,
+            method: req.method
+        })
+    } catch (error) {
+        res.status(500).json({message: error.message});
+    }
+})
+
 constructOrderRouter.get('/:accountId/construction-orders/:status', async(req, res) => {
     try {
         let orders;
