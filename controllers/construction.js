@@ -2,35 +2,39 @@ import Construction from "../models/constructionModel.js";
 import getDuration from "../utils/getDuration.js"
 
 export const getAllConstructions = async(req, res) => {
+    const { category, style, material, price_from, price_to, page, limit } = req.query;
+    const skip = (page - 1) * limit;
+    let query = {};
+
+    if (category) {
+        query.category = category;
+    }
+    if (style) {
+        query.style = style; 
+    }
+    if (material) {
+        query.material = material; 
+    }
+    if (price_from || price_to) {
+        query.total_price = {};
+        if (price_from) {
+            query.total_price.$gte = parseFloat(price_from); 
+        }
+        if (price_to) {
+            query.total_price.$lte = parseFloat(price_to);
+        }
+    }
+
     try {
-        const { category, style, material, price_from, price_to } = req.query;
-        let query = {};
-
-        if (category) {
-            query.category = category;
-        }
-        if (style) {
-            query.style = style; 
-        }
-        if (material) {
-            query.material = material; 
-        }
-        if (price_from || price_to) {
-            query.total_price = {};
-            if (price_from) {
-                query.total_price.$gte = parseFloat(price_from); 
-            }
-            if (price_to) {
-                query.total_price.$lte = parseFloat(price_to);
-            }
-        }
-
-        const allConstructions = await Construction.find(query)
+        const allConstructions = await Construction.find(query).skip(skip).limit(parseInt(limit));
+        const totalData = await Construction.countDocuments(query)
         if(allConstructions.length > 0){
             res.status(200).json({
                 msg: "Successfully get all data",
                 status: "200",
-                data_length: allConstructions.length,
+                total: totalData,
+                page: parseInt(page),
+                limit: parseInt(limit),
                 data: allConstructions,
                 method: req.method
             })
@@ -38,6 +42,8 @@ export const getAllConstructions = async(req, res) => {
             res.status(200).json({
                 msg: "No data found",
                 status: "200",
+                page: parseInt(page),
+                limit: parseInt(limit),
                 data_length: allConstructions.length,
                 method: req.method
             })
@@ -49,8 +55,23 @@ export const getAllConstructions = async(req, res) => {
 
 export const getOneConstruction = async (req, res) => {
     try {
-        const selectedItem = await Construction.findById(req.params.constructionId).populate('reviews');
-        res.status(200).json(selectedItem);
+        const { page, limit } = req.query;
+        const selectedItem = await Construction.findById(req.params.constructionId)
+            .populate({
+                path: 'reviews',
+                options: {
+                    skip: (page - 1) * limit,
+                    limit: parseInt(limit)
+                }
+            });
+        
+        const totalReviews = await Construction.findById(req.params.constructionId).populate('reviews').countDocuments();
+        res.status(200).json({
+            construction: selectedItem,
+            totalReviews,
+            totalPages: Math.ceil(totalReviews / limit),
+            currentPage: page
+        });
     } catch(err) {
         res.status(404).json({message: err.message});
     }
