@@ -19,7 +19,11 @@ voucherRouter.get('/vouchers', async (req, res) => {
     }
     try {
         const vouchers = await Voucher.find({ user_level: userLevel });
-        res.status(200).send(vouchers);
+        res.status(200).json({
+            status: 200,
+            message: 'Get vouchers for '+userLevel,
+            data: vouchers
+        });
     } catch (error) {
         res.status(500).send(error);
     }
