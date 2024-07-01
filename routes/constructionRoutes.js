@@ -8,7 +8,6 @@ const upload = multer({storage: storage})
 
 constructRouter.get('/constructions', getAllConstructions)
 constructRouter.post('/constructions/upload', upload.array('photo', 3), postConstruction)
-
 constructRouter.get('/constructions/category/:category', async (req, res) => {
     try {
         const { category } = req.params;
@@ -18,7 +17,6 @@ constructRouter.get('/constructions/category/:category', async (req, res) => {
         res.status(500).json({ error: error.message });
     }
 });
-
 constructRouter.get('/constructions/style/:style', async (req, res) => {
     try {
         const { style } = req.params;

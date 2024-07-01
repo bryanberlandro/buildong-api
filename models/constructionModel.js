@@ -24,11 +24,15 @@ const constructionSchema = mongoose.Schema({
     },
     "style": {
         type: String,
-        required: true
+        required: true,
+        enum: ['minimalist', 'modern', 'vintage', 'industrial', 'scandinavian', 'rustic', 'mediterranean', 'other'],
+        default: 'other'
     },
     "category": {
         type: String,
-        required: true
+        required: true,
+        enum: ['house', 'bedroom', 'office', 'kitchen', 'living room', 'school', 'bathroom', 'dining room', 'other'],
+        default: 'other'
     },
     "descriptions": {
         type: String,

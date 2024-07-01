@@ -80,7 +80,6 @@ export const getOneConstruction = async (req, res) => {
 export const postConstruction = async(req, res) => {
     try{
         const files = req.files;
-        console.log(req.body)
         if (!files) {
             return res.status(400).json({ message: 'No files uploaded' });
         }

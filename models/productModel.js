@@ -24,7 +24,9 @@ const Product = mongoose.Schema({
     },
     category: {
         type: String,
-        required: true
+        required: true,
+        enum: ['furniture', 'kitchen', 'bathroom', 'outdoor', 'decor', 'storage', 'flooring', 'wall art', 'other'],
+        default: 'other'
     },
     brand: {
         type: String,
@@ -33,6 +35,8 @@ const Product = mongoose.Schema({
     material: {
         type: String,
         required: true,
+        enum: ['wood', 'metal', 'glass', 'plastic', 'fabric', 'leather', 'stone', 'ceramic', 'other'],
+        default: 'other'
     },
     stock: {
         type: Number,
