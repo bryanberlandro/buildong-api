@@ -1,5 +1,5 @@
 import express from 'express';
-import Voucher from '../models/voucherModel';
+import Voucher from '../models/voucherModel.js';
 const voucherRouter = express.Router();
 
 voucherRouter.post('/vouchers', async (req, res) => {
