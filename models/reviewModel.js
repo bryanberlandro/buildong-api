@@ -1,7 +1,7 @@
 import mongoose from "../utils/db.js";
 
 const reviewSchema = mongoose.Schema({
-    user: {
+    username: {
         type: String,
         required: true
     },
@@ -9,9 +9,12 @@ const reviewSchema = mongoose.Schema({
         type: String,
         required: true
     },
-    product: {
-        type: mongoose.Schema.Types.ObjectId,
-        ref: 'Product',
+    product_id: {
+        type: String,
+        required: true
+    },
+    product_name: {
+        type: String,
         required: true
     },
     rating: {
