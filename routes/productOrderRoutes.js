@@ -20,6 +20,12 @@ productOrderRouter.get('/:accountId/product-orders', async(req, res) => {
     }
 })
 
+function generateOrderId() {
+    const timestamp = Date.now();
+    const randomPart = Math.random().toString(36).substring(2, 8);
+    return `ORD-${timestamp}-${randomPart}`.toUpperCase();
+}
+
 productOrderRouter.post('/:accountId/product-orders', async (req, res) => {
     try {
         const account = await Account.findById(req.params.accountId);
@@ -38,6 +44,7 @@ productOrderRouter.post('/:accountId/product-orders', async (req, res) => {
         for (const product of products) {
             const newOrder = new ProductOrder({
                 ...product,
+                order_id: generateOrderId(),
                 account_id: req.params.accountId
             });
 

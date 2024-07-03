@@ -2,10 +2,9 @@ import mongoose from "../utils/db.js";
 
 const productOrderSchema = mongoose.Schema({
     account_id: { type: mongoose.Schema.Types.ObjectId, ref: 'Account', required: true },
-    order_id: { type: String, required: true, },
+    order_id: { type: String, required: false, },
     product_name: { type: String, required: true },
     quantity: { type: Number, required: true},
-    location: { type: String, required: true },
     material: { type: String, required: true },
     total_price: { type: Number, required: true },
     image: [{ type: String, required: true }],
