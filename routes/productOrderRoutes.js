@@ -27,29 +27,42 @@ productOrderRouter.post('/:accountId/product-orders', async (req, res) => {
             return res.status(404).json({ message: 'Account not found' });
         }
 
-        const newOrder = new ProductOrder({
-            ...req.body,
-            account_id: req.params.accountId
-        });
+        const products = req.body.products;
+        if (!Array.isArray(products) || products.length === 0) {
+            return res.status(400).json({ message: 'No products provided' });
+        }
 
-        const savedOrder = await newOrder.save();
+        let totalPointsToAdd = 0;
+        const savedOrders = [];
 
-        const pointsToAdd = Math.floor(savedOrder.total_price / 10000);
-        account.points += pointsToAdd;
-        account.product_orders.push(savedOrder._id);
+        for (const product of products) {
+            const newOrder = new ProductOrder({
+                ...product,
+                account_id: req.params.accountId
+            });
+
+            const savedOrder = await newOrder.save();
+            savedOrders.push(savedOrder);
+
+            const pointsToAdd = Math.floor(savedOrder.total_price / 10000);
+            totalPointsToAdd += pointsToAdd;
+            account.points += pointsToAdd;
+            account.product_orders.push(savedOrder._id);
+        }
 
         await account.save();
 
         res.status(201).json({
             status: 201,
-            message: 'Successfully created product order and updated points',
-            data: savedOrder,
-            pointsAdded: pointsToAdd,
+            message: 'Successfully created product orders and updated points',
+            data: savedOrders,
+            pointsAdded: totalPointsToAdd,
             method: req.method
         });
     } catch (error) {
         res.status(500).json({ message: error.message });
     }
 });
+
 
 export default productOrderRouter;
