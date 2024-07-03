@@ -9,7 +9,7 @@ const upload = multer({storage: storage})
 prodRouter.get('/products', getAllProducts)
 prodRouter.post('/products/upload', upload.array('photo', 3), addProduct)
 prodRouter.get('/products/:prodId', getProduct)
-prodRouter.get('/:productId/reviews', async (req, res) => {
+prodRouter.get('/products/:productId/reviews', async (req, res) => {
     try {
         const { page, limit } = req.query;
         const selectedItem = await Product.findById(req.params.productId)
@@ -20,7 +20,6 @@ prodRouter.get('/:productId/reviews', async (req, res) => {
                     limit: parseInt(limit)
                 }
             });
-        
         const totalReviews = await Product.findById(req.params.productId).populate('reviews').countDocuments();
 
         res.status(200).json({
