@@ -51,7 +51,7 @@ prodRouter.get('/products/category/:category', async (req, res) => {
 prodRouter.get('/products/material/:material', async (req, res) => {
     try {
         const { material } = req.params;
-        const products = await Product.find({ style });
+        const products = await Product.find({ material });
         res.json({
             status: 200,
             total: products.length,
