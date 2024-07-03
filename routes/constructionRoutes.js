@@ -10,14 +10,24 @@ constructRouter.get('/constructions', getAllConstructions)
 constructRouter.post('/constructions/upload', upload.array('photo', 3), postConstruction)
 constructRouter.get('/:constructionId/reviews', async (req, res) => {
     try {
-        const construction = await Construction.findById(req.params.constructionId).populate('reviews');
-        if (!construction) {
-            return res.status(404).json({ message: 'Construction not found' });
-        }
+        const { page, limit } = req.query;
+        const selectedItem = await Construction.findById(req.params.constructionId)
+            .populate({
+                path: 'reviews',
+                options: {
+                    skip: (page - 1) * limit,
+                    limit: parseInt(limit)
+                }
+            });
+        
+        const totalReviews = await Construction.findById(req.params.constructionId).populate('reviews').countDocuments();
+
         res.status(200).json({
             status: 200,
-            message: "Successfully get "+construction.reviews.length+ " reviews",
-            data: construction.reviews,
+            message: "Successfully get "+selectedItem.reviews.length+ " reviews",
+            totalPages: Math.ceil(totalReviews / limit),
+            currentPage: page,
+            data: selectedItem.reviews,
             method: req.params.method
         });
     } catch (error) {

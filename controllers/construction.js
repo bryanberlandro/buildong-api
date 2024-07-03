@@ -55,22 +55,12 @@ export const getAllConstructions = async(req, res) => {
 
 export const getOneConstruction = async (req, res) => {
     try {
-        const { page, limit } = req.query;
-        const selectedItem = await Construction.findById(req.params.constructionId)
-            .populate({
-                path: 'reviews',
-                options: {
-                    skip: (page - 1) * limit,
-                    limit: parseInt(limit)
-                }
-            });
         
-        const totalReviews = await Construction.findById(req.params.constructionId).populate('reviews').countDocuments();
+        const selectedItem = await Construction.findById(req.params.constructionId);
         res.status(200).json({
+            status: 200,
+            msg: "Successfully get "+selectedItem.design_name,
             construction: selectedItem,
-            totalReviews,
-            totalPages: Math.ceil(totalReviews / limit),
-            currentPage: page
         });
     } catch(err) {
         res.status(404).json({message: err.message});

@@ -11,15 +11,24 @@ prodRouter.post('/products/upload', upload.array('photo', 3), addProduct)
 prodRouter.get('/products/:prodId', getProduct)
 prodRouter.get('/:productId/reviews', async (req, res) => {
     try {
-        const product = await Product.findById(req.params.productId).populate('reviews');
-        if (!product) {
-            return res.status(404).json({ message: 'Product not found' });
-        }
+        const { page, limit } = req.query;
+        const selectedItem = await Product.findById(req.params.productId)
+            .populate({
+                path: 'reviews',
+                options: {
+                    skip: (page - 1) * limit,
+                    limit: parseInt(limit)
+                }
+            });
+        
+        const totalReviews = await Product.findById(req.params.productId).populate('reviews').countDocuments();
 
         res.status(200).json({
             status: 200,
-            message: "Successfully get "+product.reviews.length+" reviews",
-            data: product.reviews,
+            message: "Successfully get "+selectedItem.reviews.length+ " reviews",
+            totalPages: Math.ceil(totalReviews / limit),
+            currentPage: page,
+            data: selectedItem.reviews,
             method: req.params.method
         });
     } catch (error) {
