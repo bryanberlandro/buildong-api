@@ -34,6 +34,34 @@ prodRouter.get('/products/:productId/reviews', async (req, res) => {
         res.status(500).json({ message: error.message });
     }
 });
+prodRouter.get('/products/category/:category', async (req, res) => {
+    try {
+        const { category } = req.params;
+        const products = await Product.find({ category });
+        res.json({
+            status: 200,
+            total: products.length,
+            message: "Successfully get related products",
+            data: products
+        });
+    } catch (error) {
+        res.status(500).json({ error: error.message });
+    }
+});
+prodRouter.get('/products/material/:material', async (req, res) => {
+    try {
+        const { material } = req.params;
+        const products = await Product.find({ style });
+        res.json({
+            status: 200,
+            total: products.length,
+            message: "Successfully get related products",
+            data: products
+        });
+    } catch (error) {
+        res.status(500).json({ error: error.message });
+    }
+});
 prodRouter.patch('/products/:prodId', updateProduct)
 prodRouter.delete('/products/:prodId', deleteProduct)
 
