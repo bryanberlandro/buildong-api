@@ -6,6 +6,7 @@ const productOrderSchema = mongoose.Schema({
     product_name: { type: String, required: true },
     quantity: { type: Number, required: true},
     location: { type: String, required: true },
+    material: { type: String, required: true },
     total_price: { type: Number, required: true },
     image: [{ type: String, required: true }],
     category: { type: String, required: true },
